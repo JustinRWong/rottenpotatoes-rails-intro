@@ -12,6 +12,8 @@ class MoviesController < ApplicationController
   end
 
   def index
+    sort = session[:sort]
+    
     @all_ratings = Movie.distinct.pluck(:rating)
     if params[:ratings]
         @movies = Movie.with_ratings(params[:ratings].keys)
