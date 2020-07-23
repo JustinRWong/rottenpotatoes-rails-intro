@@ -25,12 +25,15 @@ class MoviesController < ApplicationController
                 @release_hilite = "hilite"
         end
         
-        session[:ratings] ||= @all_ratings ## default to all ratings if not specified
-        @ratings = 
-        @ratings = session[:ratings].keys if session[:ratings].keys
-        @movies = Movie.where(:rating => session[:ratings].keys).all.order(sort_column + " " + sort_direction)
-#         @movies = Movie.find(:all, order: session[:sort], conditions: ["rating IN (?)", @ratings])
         
+        session[:ratings] ||= @all_ratings ## default to all ratings if not specified
+        @ratings = session[:ratings]
+        @ratings = @ratings.keys if @ratings.respond_to?(:keys)
+#             @ratings = @ratings.keys if :rating in session[:ratings] end
+#         end 
+#         @movies = Movie.where("rating = ? ", session[:ratings].keys).all.order(sort_column + " " + sort_direction)
+#         @movies = Movie.find(:all, order: session[:sort], conditions: ["rating IN (?)", @ratings])
+        @movies = Movie.where(rating: @ratings).all.order(sort_column + " " + sort_direction)
     else
 #     if params[:ratings]
 #         @movies = Movie.with_ratings(params[:ratings].keys)
