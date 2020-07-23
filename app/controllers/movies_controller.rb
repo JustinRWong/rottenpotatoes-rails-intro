@@ -12,7 +12,9 @@ class MoviesController < ApplicationController
   end
 
   def index
-    sort = session[:sort]
+#     if session[:sort]
+        
+#     sort = session[:sort]
     
     @all_ratings = Movie.distinct.pluck(:rating)
     if params[:ratings]
